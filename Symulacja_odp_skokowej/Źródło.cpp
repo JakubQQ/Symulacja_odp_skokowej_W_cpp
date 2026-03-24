@@ -15,6 +15,7 @@ vector<float> pomnoz_macierz_wektor(vector<vector<float>>, vector<float>, int);
 vector<float> pomnoz_B_u(vector<vector<float>>, float, int);
 vector<float> dodaj_wektory(vector<float>, vector<float>, int);
 float pomnoz_C_x(vector<vector<float>> C, vector<float> x, int wymiar);
+vector<float> pomnoz_wektor_skalar(vector<float>, float, int);
 
 int main(){
 	int wymiar = 0;
@@ -30,7 +31,6 @@ int main(){
 	vector<float> wspolczynniki_d;
 	vector<float> x;
 	vector<float> y;
-	int liczba_probek = 50;
 
 	cout << "Podaj wymiar macierzy A "; cin >> wymiar; cout << "\n";
 	cout << "Macierz A bedzie w postaci regulatorowej \n";
@@ -102,7 +102,11 @@ int main(){
 
 	wyswietl_macierze(MacierzA, MacierzB, MacierzC, wymiar);
 
-	ofstream plik("wyniki.csv", ios::app);
+	ofstream plik("wyniki.csv");
+
+	float dt = 0.01f;
+	float t = 0.0f;
+	int liczba_probek = 600;
 
 	for (int i = 0; i < liczba_probek; i++)
 	{
@@ -111,9 +115,11 @@ int main(){
 		cout << "Probka " << i << " y[n]: " << y[i] << "\n";
 		vector<float> Ax = pomnoz_macierz_wektor(MacierzA, x, wymiar);
 		vector<float> Bu = pomnoz_B_u(MacierzB, odp_skokowa, wymiar);
-		x = dodaj_wektory(Ax, Bu, wymiar);
-
+		vector<float> dx = dodaj_wektory(Ax, Bu, wymiar);
+		vector<float> zmiana_x = pomnoz_wektor_skalar(dx, dt, wymiar);
+		x = dodaj_wektory(x, zmiana_x, wymiar);
 		plik << i << "," << y[i] << "\n";
+		t += dt;
 	}
 	plik.close();
 	return 0;
@@ -178,4 +184,13 @@ float pomnoz_C_x(vector<vector<float>> C, vector<float> x, int wymiar)
 		wynik += C[0][i] * x[i];
 	}
 	return  wynik;
+}
+vector<float> pomnoz_wektor_skalar(vector<float> v, float skalar, int wymiar)
+{
+	vector<float> wynik(wymiar, 0.0f);
+	for (int i = 0; i < wymiar; i++)
+	{
+		wynik[i] = v[i] * skalar;
+	}
+	return wynik;
 }
