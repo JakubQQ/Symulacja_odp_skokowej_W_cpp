@@ -19,7 +19,10 @@
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>
+<<<<<<< HEAD
   <ItemGroup>
     <None Include="Wykresy.py" />
   </ItemGroup>
+=======
+>>>>>>> 588109011c4a042352164cdb39d7379a9d51f0c3
 </Project>

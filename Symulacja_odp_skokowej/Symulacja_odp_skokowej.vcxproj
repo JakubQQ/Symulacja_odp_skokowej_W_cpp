@@ -125,9 +125,12 @@
   <ItemGroup>
     <ClCompile Include="Źródło.cpp" />
   </ItemGroup>
+<<<<<<< HEAD
   <ItemGroup>
     <None Include="Wykresy.py" />
   </ItemGroup>
+=======
+>>>>>>> 588109011c4a042352164cdb39d7379a9d51f0c3
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
